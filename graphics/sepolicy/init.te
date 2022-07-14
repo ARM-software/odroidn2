@@ -1,0 +1,16 @@
+# init.hikey.usb.rc writes to /config/* to set up USB
+allow init configfs:dir create_dir_perms;
+allow init configfs:file write;
+allow init configfs:lnk_file { create unlink };
+# for symlink /sdcard /mnt/sdcard
+allow init tmpfs:lnk_file create;
+allow init configfs:lnk_file create;
+
+dontaudit init kernel:system module_request;
+
+allow init self:capability { sys_module };
+allow init { vendor_file system_module_file }:system { module_load };
+allow init { vendor_file system_module_file }:file { getattr read };
+allow init nativetest_data_file:dir { getattr read };
+
+allow unlabeled self:filesystem associate;

@@ -1,0 +1,3 @@
+dontaudit zygote system_file:file { read write getattr };
+dontaudit zygote system_file:dir { write };
+allow zygote self:capability { fsetid };

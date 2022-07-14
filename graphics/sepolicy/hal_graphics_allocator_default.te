@@ -1,0 +1,8 @@
+allow hal_graphics_allocator_default graphics_device:dir search;
+allow hal_graphics_allocator_default graphics_device:chr_file { map rw_file_perms };
+
+# Allow users of IMapper and IAllocator to access shared memfd buffers
+allow hal_graphics_allocator_client hal_graphics_allocator_default_tmpfs:file { getattr read write map };
+allow hal_graphics_composer_default hal_graphics_allocator_default_tmpfs:file { getattr read write map };
+# Allow users in other MLS contexts to access shared memfd buffers
+typeattribute hal_graphics_allocator_default_tmpfs mlstrustedobject;
