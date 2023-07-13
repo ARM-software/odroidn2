@@ -3,7 +3,7 @@
 # confidential and may only be used by an authorized person under a valid
 # licensing agreement from Arm Limited or its affiliates.
 #
-# Copyright (C) 2019-2022. Arm Limited or its affiliates. All rights reserved.
+# Copyright (C) 2019-2023. Arm Limited or its affiliates. All rights reserved.
 #
 # This entire notice must be reproduced on all copies of this file and
 # copies of this file may only be made by an authorized person under a valid
@@ -39,7 +39,7 @@ GRALLOC_HWC_FB_DISABLE_AFBC := 1
 $(call inherit-product-if-exists,vendor/arm/mali/gpu/product/mali_gpu.mk)
 $(call inherit-product-if-exists,device/arm/odroidn2/graphics/mali_gpu_prebuilt/mali_gpu.mk)
 
-PRODUCT_PACKAGES += libGLES_mali mali_kbase libRSDriverArm vulkan.$(PRODUCT_NAME)
+PRODUCT_PACKAGES += libGLES_mali libOpenCL vulkan.mali mali_kbase libRSDriverArm vulkan.$(PRODUCT_NAME)
 
 PRODUCT_PROPERTY_OVERRIDES += ro.opengles.version=196610
 
