@@ -29,6 +29,7 @@
 GRALLOC_DISABLE_FRAMEBUFFER_HAL := 1
 GRALLOC_USE_ION_DMA_HEAP := 1
 GRALLOC_HWC_FB_DISABLE_AFBC := 1
+GRALLOC_USE_CONTIGUOUS_DISPLAY_MEMORY :=1
 
 # Include board specific mali configuration files if they exist.
 # They won't exist when building with MALI_DISABLED.
@@ -42,13 +43,6 @@ $(call inherit-product-if-exists,device/arm/odroidn2/graphics/mali_gpu_prebuilt/
 PRODUCT_PACKAGES += libGLES_mali libOpenCL vulkan.mali mali_kbase libRSDriverArm vulkan.$(PRODUCT_NAME)
 
 PRODUCT_PROPERTY_OVERRIDES += ro.opengles.version=196610
-
-PRODUCT_PACKAGES += \
-    android.hardware.graphics.allocator@4.0-impl-arm \
-    android.hardware.graphics.allocator@4.0-service \
-    android.hardware.graphics.composer@2.1-impl \
-    android.hardware.graphics.composer@2.1-service \
-    android.hardware.graphics.mapper@4.0-impl-arm
 
 OVERRIDE_RS_DRIVER := libRSDriverArm.so
 
@@ -67,5 +61,15 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/mali_kbase.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/mali_kbase.rc
 
 DEVICE_MANIFEST_FILE += device/arm/odroidn2/graphics/odroidn2-graphics.xml
+# The graphics allocator, composer and mapper HAL interfaces are now optionally specified in the latest versions
+# of the gralloc module. We will call this a VINTF_ENABLED gralloc submodule.
+# These HAL interfaces must be declared somewhere for a build to succeed and they must not be declared twice.
+# For this reason a VINTF_ENABLED gralloc submodule will detect the existence of "manifest_vintf.xml" in the BSP and
+# will in turn generate a "vintf_enabled" file. If the vintf_enabled file is not detected then manifest_vintf.xml will
+# be added to the DEVICE_MANIFEST_FILE
+ifeq ($(wildcard vendor/arm/mali/gpu/product/android/gralloc/build_vintf/vintf_enabled),)
+    DEVICE_MANIFEST_FILE += device/arm/odroidn2/graphics/manifest_vintf.xml
+endif
+
 
 BOARD_SEPOLICY_DIRS += device/arm/odroidn2/graphics/sepolicy

@@ -3,7 +3,7 @@
 # confidential and may only be used by an authorized person under a valid
 # licensing agreement from Arm Limited or its affiliates.
 #
-# Copyright (C) 2019-2022. Arm Limited or its affiliates. All rights reserved.
+# Copyright (C) 2019-2023. Arm Limited or its affiliates. All rights reserved.
 #
 # This entire notice must be reproduced on all copies of this file and
 # copies of this file may only be made by an authorized person under a valid
@@ -25,8 +25,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Enable Treble and other requirements from Android Q
-PRODUCT_SHIPPING_API_LEVEL := 31
+# Enable Treble and other requirements from Android T
+PRODUCT_SHIPPING_API_LEVEL := 33
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
 PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
 
@@ -71,9 +71,12 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
     device/arm/odroidn2/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
     device/arm/odroidn2/ueventd.odroidn2.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc \
+    device/arm/odroidn2/gpu.xml:$(TARGET_COPY_OUT_VENDOR)/etc/gralloc/gpu.xml \
 
 PRODUCT_COPY_FILES += $(call add-to-product-copy-files-if-exists, $(LOCAL_PATH)/busybox:$(TARGET_COPY_OUT_SYSTEM)/xbin/busybox) \
     $(call add-to-product-copy-files-if-exists, $(LOCAL_PATH)/busybox:$(TARGET_COPY_OUT_RAMDISK)/busybox)
+
+PRODUCT_COPY_FILES += $(LOCAL_PATH)/seccomp_policy/mediaswcodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaswcodec.policy
 
 # HALs
 AUDIOSERVER_MULTILIB := 64
@@ -84,16 +87,18 @@ PRODUCT_PACKAGES += \
     android.hardware.keymaster@3.0-impl \
     android.hardware.keymaster@3.0-service \
     android.hardware.light@2.0-impl \
-    android.hardware.audio@6.0-impl \
-    android.hardware.audio@2.0-service \
-    android.hardware.audio.effect@6.0-impl \
+    android.hardware.audio@7.0-impl \
+    android.hardware.audio.service \
+    android.hardware.audio.effect@7.0-impl \
     android.hardware.broadcastradio@1.0-impl \
-    android.hardware.health@2.1-service \
-    android.hardware.health@2.1-impl \
+    health.default \
+    android.hardware.health \
+    android.hardware.health-service.example \
     android.hardware.soundtrigger@2.0-impl \
     android.hardware.gatekeeper@1.0-service.software \
     android.hardware.usb@1.0-service \
-    android.hardware.power-service.example
+    android.hardware.power-service.example \
+    android.hardware.thermal@2.0-service.mock
 
 # audio policy configuration
 USE_XML_AUDIO_POLICY_CONF := 1
@@ -105,6 +110,7 @@ PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/surround_sound_configuration_5_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/surround_sound_configuration_5_0.xml \
     frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml
+
 
 PRODUCT_COPY_FILES += device/arm/odroidn2/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 

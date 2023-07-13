@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <!--
      The proprietary software and information contained in this file is
      confidential and may only be used by an authorized person under a valid
@@ -23,15 +24,24 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
- -->
-<manifest version="1.0" type="device" target-level="7">
-    <hal format="hidl">
-        <name>android.hardware.renderscript</name>
-        <transport arch="32+64">passthrough</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IDevice</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-</manifest>
+-->
+
+<capabilities version="0.2">
+    <ip_capabilities ip="GPU">
+        <feature name="FORMAT_R10G10B10A2" permission="RW" />
+        <feature name="FORMAT_R16G16B16A16_FLOAT" permission="RW" />
+        <feature name="AFBC_16X16" permission="RW" />
+        <feature name="AFBC_32X8" permission="RW" />
+        <feature name="AFBC_YUV" permission="RW" />
+        <feature name="AFBC_BLOCK_SPLIT" permission="RW" />
+        <feature name="AFBC_TILED_HEADERS" permission="RW" />
+        <feature name="AFBC_64X4" permission="NO" />
+        <feature name="AFBC_DOUBLE_BODY" permission="NO" />
+        <feature name="AFBC_FORMAT_R16G16B16A16_FLOAT" permission="NO" />
+        <feature name="AFBC_WRITE_NON_SPARSE" permission="NO" />
+        <feature name="AFRC_ROT_LAYOUT" permission="NO" />
+        <feature name="AFRC_SCAN_LAYOUT" permission="NO" />
+        <feature name="YUV_BL_8" permission="RO" />
+        <feature name="YUV_BL_10" permission="NO" />
+    </ip_capabilities>
+</capabilities>
